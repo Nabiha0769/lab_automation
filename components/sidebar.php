@@ -17,14 +17,6 @@
               <span class="hide-menu">Product Management</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./products.php" aria-expanded="false">
-                <span>
-                  <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
-                </span>
-                <span class="hide-menu">Products</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
               <a class="sidebar-link" href="./add_products.php" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>

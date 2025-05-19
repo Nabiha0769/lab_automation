@@ -32,6 +32,10 @@ if(isset($_SESSION['username'])){
                 </a>
                 <form method="post">
                   <div class="mb-3">
+                    <label for="exampleInputUsername" class="form-label">name</label>
+                    <input type="text" class="form-control" id="exampleInputUsername" name="name">
+                  </div>
+                  <div class="mb-3">
                     <label for="exampleInputUsername" class="form-label">Username</label>
                     <input type="text" class="form-control" id="exampleInputUsername" name="username">
                   </div>
@@ -39,56 +43,35 @@ if(isset($_SESSION['username'])){
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                   </div>
+                  <div class="mb-4">
+                    <label for="exampleInputPassword1" class="form-label">department</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="department">
+                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">manufacturer</a></li>
+    <li><a class="dropdown-item" href="#">tester</a></li>
+    <li><a class="dropdown-item" href="#">CpRI</a></li>
+  </ul>
+                  </div>
                   <input type="submit" value="Sign In" class="btn btn-primary w-100 py-8 fs-4 mb-4" name="submit">
                 </form>
                 <?php
-                  if(isset($_POST['submit'])){
-                    $username = $_POST['username'];
-                    $password = $_POST['password'];
-                    $query = "select * from tbl_user where username = '$username'";
-                    $result = mysqli_query($conn,$query);
-                    if(mysqli_num_rows($result)>0){
-                      $query2 = "select * from tbl_user where username = '$username' AND password = '$password'";
-                      $result2 = mysqli_query($conn,$query2);
-                      if(mysqli_num_rows($result2)>0){
-                       foreach($result2 as $row){
-                        $_SESSION['role'] = $row ['role'];
-                        $_SESSION['u_id'] = $row ['id'];
-                        $_SESSION['username'] = $row ['username'];
-                        if( $row['role']==="admin")  {
+                 if(isset($_POST["submit"])){
+    $name = $_POST["name"];
+$username = $_POST["username"];
+$password = $_POST["password"];
+$department = $_POST["department"];
+$query = "insert into tbl_user (name,username,password,department) VALUES ('$name','$username','$password','$department')";
+$result= mysqli_query($conn,$query);
+if($result){
+  
                        echo "
                         <script>
                           alert('Login Successful')
-                          window.location.href = 'dashboard.php'
+                          window.location.href = 'login.php'
                         </script>
                         ";
-                          }
-                        else{
-                           echo "
-                        <script>
-                          alert('Login Successful')
-                          window.location.href = '../fruitables-1.0.0/index.php'
-                        </script>
-                        ";
-                        }
-                       }
-                      }
-                      else{
-                        echo "
-                        <script>
-                          alert('Invalid Password')
-                        </script>
-                        ";
-                      }
-                    }
-                    else{
-                      echo "
-                        <script>
-                          alert('Incorrect Username and Password')
-                        </script>
-                        ";
-                    }
-                  }
+}
+}
                 ?>
               </div>
             </div>

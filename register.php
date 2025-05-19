@@ -11,7 +11,7 @@ if(isset($_SESSION['username'])){
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SeoDash Free Bootstrap Admin Template by Adminmart</title>
+  <title>Registration</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
 </head>
@@ -32,53 +32,45 @@ if(isset($_SESSION['username'])){
                 </a>
                 <form method="post">
                   <div class="mb-3">
+                    <label for="exampleInputUsername" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="exampleInputUsername" name="name">
+                  </div>
+                  <div class="mb-3">
                     <label for="exampleInputUsername" class="form-label">Username</label>
                     <input type="text" class="form-control" id="exampleInputUsername" name="username">
                   </div>
                   <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
                   </div>
-                  <input type="submit" value="Sign In" class="btn btn-primary w-100 py-8 fs-4 mb-4" name="submit">
+                  <div class="mb-4">
+                    <label for="department" class="form-label">Department</label>
+                    <select name="department" id="department" class="form-control" name="department">
+                      <option value="">Select Department</option>
+                      <option value="manufacturer">Manufacturer</option>
+                      <option value="tester">Tester</option>
+                      <option value="cpri">CPRI</option>
+                    </select>
+                  </div>
+                  <input type="submit" value="Register" class="btn btn-primary w-100 py-8 fs-4 mb-4" name="submit">
                 </form>
                 <?php
-                  if(isset($_POST['submit'])){
-                    $username = $_POST['username'];
-                    $password = $_POST['password'];
-                    $query = "select * from tbl_user where username = '$username'";
-                    $result = mysqli_query($conn,$query);
-                    if(mysqli_num_rows($result)>0){
-                      $query2 = "select * from tbl_user where username = '$username' AND password = '$password'";
-                      $result2 = mysqli_query($conn,$query2);
-                      if(mysqli_num_rows($result2)>0){
-                       foreach($result2 as $row){
-                        $_SESSION['department'] = $row ['department'];
-                        $_SESSION['u_id'] = $row ['id'];
-                        $_SESSION['username'] = $row ['username'];
+                      if(isset($_POST["submit"])){
+                      $name = $_POST["name"];
+                      $username = $_POST["username"];
+                      $password = $_POST["password"];
+                      $department = $_POST["department"];
+                      $query = "insert into tbl_user (name,username,password,department) VALUES ('$name','$username','$password','$department')";
+                      $result= mysqli_query($conn,$query);
+                      if($result){
                        echo "
                         <script>
                           alert('Login Successful')
-                          window.location.href = 'dashboard.php'
-                        </script>
-                        ";
-                       }
-                      }
-                      else{
-                        echo "
-                        <script>
-                          alert('Invalid Password')
+                          window.location.href = 'index.php'
                         </script>
                         ";
                       }
                     }
-                    else{
-                      echo "
-                        <script>
-                          alert('Incorrect Username and Password')
-                        </script>
-                        ";
-                    }
-                  }
                 ?>
               </div>
             </div>

@@ -1,9 +1,11 @@
 <?php
 session_start();
-if(!isset($_SESSION['username'])){
+if (!isset($_SESSION['username'])) {
   header("location:index.php");
 }
 include 'components/connnection.php';
+$prod_type = "select * from tbl_product";
+$result = mysqli_query($conn, $prod_type);
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,7 +13,7 @@ include 'components/connnection.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SeoDash Free Bootstrap Admin Template by Adminmart</title>
+  <title>Add Manufactured Items</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="assets/css/styles.min.css" />
@@ -43,108 +45,73 @@ include 'components/connnection.php';
     <!--  Main wrapper -->
     <div class="body-wrapper">
       <!--  Header Start -->
-      <header class="app-header">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <ul class="navbar-nav">
-            <li class="nav-item d-block d-xl-none">
-              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                <i class="ti ti-menu-2"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                <i class="ti ti-bell-ringing"></i>
-                <div class="notification bg-primary rounded-circle"></div>
-              </a>
-            </li>
-          </ul>
-          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-              <a href="#" target="_blank"
-                class="btn btn-primary me-2"><span class="d-none d-md-block">Check Pro Version</span> <span class="d-block d-md-none">Pro</span></a>
-              <a href="#" target="_blank"
-                class="btn btn-success"><span class="d-none d-md-block">Download Free </span> <span class="d-block d-md-none">Free</span></a>
-              <li class="nav-item dropdown">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <img src="assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                  <div class="message-body">
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
-                    </a>
-                    <a href="./index.php" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
+      <?php include 'components/header.php' ?>
       <!--  Header End -->
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Add Products</h5>
-                <form method="post" enctype="multipart/form-data">
-                  <div class="mb-3">
-                    <label for="product_name" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" id="product_name" name="p_name">
-                  </div>
-                  <div class="mb-3">
-                    <label for="product_price" class="form-label">Price</label>
-                    <input type="number" class="form-control" id="product_price" name="p_price">
-                  </div>
-                  <div class="mb-3">
-                    <label for="product_desc" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="product_desc" name="p_desc">
-                  </div>
-                  <div class="mb-3">
-                    <label for="product_image" class="form-label">Image</label>
-                    <input type="file" class="form-control" id="product_image" name="p_image">
-                  </div>
-                  <input type="submit" value="Add Product" class="btn btn-primary w-100" name="submit">
-                </form>
-                <?php
-                if(isset($_POST['submit'])){
-                  $image_name = $_FILES['p_image']['name'];
-                  $img_name = rand(1,999).$image_name;
-                  $tmp_name = $_FILES['p_image']['tmp_name'];
-                  $size = $_FILES['p_image']['size'];
-                  $folder = "assets/images/products/".$img_name;
-                  move_uploaded_file($tmp_name,$folder);
-                  $p_name = $_POST['p_name'];
-                  $p_price = $_POST['p_price'];
-                  $p_desc = $_POST['p_desc'];
-                  $query = "insert into tbl_products (p_name,p_price,p_desc,p_image) values ('$p_name','$p_price','$p_desc','$img_name')";
-                  $result = mysqli_query($conn,$query);
-                  if($result){
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title fw-semibold mb-4">Add Manufactured Items</h5>
+              <a class="mb-4 btn btn-success" href="add_prod_type.php">Add Product Type</a>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="prod_type" class="form-label">Product Type</label>
+                <select name="prod_type" id="prod_type" class="form-control">
+                  <option value="">Select Product Type</option>
+                  <?php
+                  foreach ($result as $type) {
                     echo "
-                    <script>
-                    alert('product add successfully');
-                    window.location.href = 'products.php';
-                    </script>
-                    ";
+                          <option value='$type[prod_type]'>$type[prod_type]</option>
+                          ";
                   }
-                }
-                ?>
+                  ?>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="qty" class="form-label">Qty</label>
+                <input type="number" class="form-control" id="qty" name="qty">
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date">
+              </div>
+
+              <input type="submit" value="Add Product" class="btn btn-primary w-100" name="submit">
+            </form>
+            <?php
+            if (isset($_POST['submit'])) {
+              // Generate a 10-digit unique ID
+              $id = mt_rand(1000000000, 9999999999); // Random 10-digit number
+
+              $product_type = $_POST['prod_type'];
+              $qty = $_POST['qty'];
+              $date = $_POST['date'];
+
+              // Optional: Check if ID already exists (recommended for uniqueness)
+              $check = mysqli_query($conn, "SELECT * FROM tbl_manufacture WHERE id = '$id'");
+              while (mysqli_num_rows($check) > 0) {
+                $id = mt_rand(1000000000, 9999999999); // Generate a new one if exists
+                $check = mysqli_query($conn, "SELECT * FROM tbl_manufacture WHERE id = '$id'");
+              }
+
+              $query = "INSERT INTO tbl_manufacture (id, product_type, qty, date) VALUES ('$id', '$product_type', '$qty', '$date')";
+              $result = mysqli_query($conn, $query);
+
+              if ($result) {
+                echo "
+                <script>
+                  alert('Product added successfully');
+                  window.location.href = 'products.php';
+                </script>
+              ";
+              }
+            }
+            ?>
+
           </div>
         </div>
-        <div class="py-6 px-6 text-center">
-          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-              class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com/" target="_blank"
-              class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
-        </div>
+        
       </div>
     </div>
   </div>
