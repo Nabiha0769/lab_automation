@@ -3,7 +3,27 @@ session_start();
 if(!isset($_SESSION['username'])){
   header("location:index.php");
 }
+?>
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+  header("location:index.php");
+  exit();
+}
 
+$role = $_SESSION['department'];
+?><?php if ($role === 'Admin') { ?>
+  <!-- Admin-Only Cards/Links -->
+  <a href="add_user.php">Add User</a>
+  <a href="add_product.php">Add Product</a>
+  <!-- etc -->
+<?php } ?><?php if ($role === 'Lab Manager') { ?>
+  <!-- Lab Manager Content -->
+<?php } ?>
+
+<?php if ($role === 'Tester') { ?>
+  <!-- Tester Content -->
+<?php } ?>
 ?>
 <!doctype html>
 <html lang="en">
