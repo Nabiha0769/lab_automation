@@ -98,7 +98,7 @@ if (!isset($_SESSION['username'])) {
                             if ($department === "taster") {
             $stmtTaster = $conn->prepare("INSERT INTO taster (name, user_id) VALUES (?, ?)");
             if ($stmtTaster) {
-                $stmtTaster->bind_param("is", $newUserId, $fullname);
+                $stmtTaster->bind_param("si",$fullname,$newUserId);
                 $stmtTaster->execute();
                 $stmtTaster->close();
             }

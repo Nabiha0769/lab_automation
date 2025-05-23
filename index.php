@@ -4,28 +4,6 @@ include './components/connnection.php';
 if(isset($_SESSION['username'])){
   header("location:dashboard.php");
 }
-if (isset($_POST['submit'])) {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-
-  $query = "SELECT * FROM tbl_user WHERE username = '$username'";
-  $result = mysqli_query($conn, $query);
-
-  if (mysqli_num_rows($result) > 0) {
-    $user = mysqli_fetch_assoc($result);
-
-    if (password_verify($password, $user['password'])) {
-      $_SESSION['username'] = $user['username'];
-      $_SESSION['department'] = $user['department'];
-      $_SESSION['u_id'] = $user['id'];
-      echo "<script>alert('Login Successful'); window.location.href = 'dashboard.php';</script>";
-    } else {
-      echo "<script>alert('Invalid Password');</script>";
-    }
-  } else {
-    echo "<script>alert('Incorrect Username and Password');</script>";
-  }
-}
 
 
 ?>
@@ -72,20 +50,18 @@ if (isset($_POST['submit'])) {
                     $query = "select * from tbl_user where username = '$username'";
                     $result = mysqli_query($conn,$query);
                     if(mysqli_num_rows($result)>0){
-                      $query2 = "select * from tbl_user where username = '$username' AND password = '$password'";
-                      $result2 = mysqli_query($conn,$query2);
-                      if(mysqli_num_rows($result2)>0){
-                       foreach($result2 as $row){
-                        $_SESSION['department'] = $row ['department'];
-                        $_SESSION['u_id'] = $row ['id'];
-                        $_SESSION['username'] = $row ['username'];
+                      
+                      $row = $result->fetch_assoc();
+                      if(password_verify($password, $row['password'])){
+                        $_SESSION['department'] = $row['department'];
+                        $_SESSION['u_id'] = $row['id'];
+                        $_SESSION['username'] = $row['username'];
                        echo "
                         <script>
                           alert('Login Successful')
                           window.location.href = 'dashboard.php'
                         </script>
                         ";
-                       }
                       }
                       else{
                         echo "

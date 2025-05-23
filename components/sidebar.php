@@ -14,14 +14,22 @@
             </li>
             <li class="nav-small-cap">
               <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6" class="fs-6"></iconify-icon>
-              <span class="hide-menu">Product Management</span>
+              <span class="hide-menu">User Management</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./add_products.php" aria-expanded="false">
+              <a class="sidebar-link" href="./user.php" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
-                <span class="hide-menu">Add Product</span>
+                <span class="hide-menu">Users</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./add_user.php" aria-expanded="false">
+                <span>
+                  <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
+                </span>
+                <span class="hide-menu">Add User</span>
               </a>
             </li>
             
