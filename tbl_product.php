@@ -44,9 +44,10 @@ if(isset($_SESSION['username'])){
                     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                   </div>
                   <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">department</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="department">
+                    <label for="exampleInputPassword1" class="form-label">role</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="role">
                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">admin</a></li>
     <li><a class="dropdown-item" href="#">manufacturer</a></li>
     <li><a class="dropdown-item" href="#">tester</a></li>
     <li><a class="dropdown-item" href="#">CpRI</a></li>
@@ -59,8 +60,8 @@ if(isset($_SESSION['username'])){
     $name = $_POST["name"];
 $username = $_POST["username"];
 $password = $_POST["password"];
-$department = $_POST["department"];
-$query = "insert into tbl_user (name,username,password,department) VALUES ('$name','$username','$password','$department')";
+$department = $_POST["role"];
+$query = "insert into tbl_user (name,username,password,role) VALUES ('$name','$username','$password','$department')";
 $result= mysqli_query($conn,$query);
 if($result){
   

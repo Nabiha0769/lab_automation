@@ -62,13 +62,13 @@ if (!isset($_SESSION['username'])) {
                     <th>U_ID</th>
                     <th>Name</th>
                     <th>Username</th>
-                    <th>Department</th>
+                    <th>Role</th>
                     <th>Option</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
-                  $stmt = $conn->prepare("SELECT id, name, username, department FROM tbl_user");
+                  $stmt = $conn->prepare("SELECT id, name, username, role FROM tbl_user");
                   if ($stmt) {
                     $stmt->execute();
                     $stmt->bind_result($user_id, $name, $username, $department);

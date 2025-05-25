@@ -44,9 +44,10 @@ if(isset($_SESSION['username'])){
                     <input type="password" class="form-control" id="password" name="password">
                   </div>
                   <div class="mb-4">
-                    <label for="department" class="form-label">Department</label>
-                    <select name="department" id="department" class="form-control" name="department">
-                      <option value="">Select Department</option>
+                    <label for="department" class="form-label">Role</label>
+                    <select name="department" id="role" class="form-control" name="role">
+                      <option value="">Select Role</option>
+                      <option value="admin">Admin</option>
                       <option value="manufacturer">Manufacturer</option>
                       <option value="tester">Tester</option>
                       <option value="cpri">CPRI</option>
@@ -59,8 +60,8 @@ if(isset($_SESSION['username'])){
                       $name = $_POST["name"];
                       $username = $_POST["username"];
                       $password = $_POST["password"];
-                      $department = $_POST["department"];
-                      $query = "insert into tbl_user (name,username,password,department) VALUES ('$name','$username','$password','$department')";
+                      $department = $_POST["role"];
+                      $query = "insert into tbl_user (name,username,password,role) VALUES ('$name','$username','$password','$department')";
                       $result= mysqli_query($conn,$query);
                       if($result){
                        echo "

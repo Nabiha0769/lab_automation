@@ -69,9 +69,10 @@ if (!isset($_SESSION['username'])) {
               </div>
               <div class="mb-3">
                 <label for="department" class="form-label">Department</label>
-                <select class="form-select" id="department" name="department" required>
+                <select class="form-select" id="role" name="role" required>
                   <option value="">Select Role</option>
-                  <option value="taster">Taster</option>
+                <option value="admin">Admin</option>
+                <option value="taster">Taster</option>
                   <option value="CPRI">CPRI</option>
                   <option value="manufacturer">Manufacturer</option>
                 </select>
@@ -84,10 +85,10 @@ if (!isset($_SESSION['username'])) {
               $fullname = $_POST['fullname'];
               $username = $_POST['username'];
               $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-              $department = $_POST['department'];
+              $department = $_POST['role'];
 
               // Insert into tbl_user
-              $stmt = $conn->prepare("INSERT INTO tbl_user (name, username, password, department) VALUES (?, ?, ?, ?)");
+              $stmt = $conn->prepare("INSERT INTO tbl_user (name, username, password, role) VALUES (?, ?, ?, ?)");
               if ($stmt) {
                 $stmt->bind_param("ssss", $fullname, $username, $password, $department);
                 if ($stmt->execute()) {

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Process form submission
   $name = $_POST['fullname'] ?? '';
   $username = $_POST['username'] ?? '';
-  $department = $_POST['department'] ?? '';
+  $department = $_POST['role'] ?? '';
   $password = $_POST['password'] ?? '';
 
   if (empty($name) || empty($username) || empty($department)) {
@@ -33,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Password provided, hash it
       $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-      $stmt = $conn->prepare("UPDATE tbl_user SET name=?, username=?, department=?, password=? WHERE id=?");
+      $stmt = $conn->prepare("UPDATE tbl_user SET name=?, username=?, role=?, password=? WHERE id=?");
       $stmt->bind_param("ssssi", $name, $username, $department, $hashedPassword, $user_id);
     } else {
       // No password change
-      $stmt = $conn->prepare("UPDATE tbl_user SET name=?, username=?, department=? WHERE id=?");
+      $stmt = $conn->prepare("UPDATE tbl_user SET name=?, username=?, role=? WHERE id=?");
       $stmt->bind_param("sssi", $name, $username, $department, $user_id);
     }
 
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 } else {
   // Fetch current data to prefill form
-  $stmt = $conn->prepare("SELECT name, username, department FROM tbl_user WHERE id = ?");
+  $stmt = $conn->prepare("SELECT name, username, role FROM tbl_user WHERE id = ?");
   $stmt->bind_param("i", $user_id);
   $stmt->execute();
   $stmt->bind_result($name, $username, $department);
@@ -114,9 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" id="username" name="username" class="form-control" required value="<?= htmlspecialchars($username) ?>">
               </div>
               <div class="mb-3">
-                <label for="department" class="form-label">Department</label>
+                <label for="department" class="form-label">Role</label>
                 <select id="department" name="department" class="form-select" required>
-                  <option value="">Select Department</option>
+                  <option value="">Select Role</option>
                   <option value="taster" <?= $department === 'taster' ? 'selected' : '' ?>>Taster</option>
                   <option value="CPRI" <?= $department === 'CPRI' ? 'selected' : '' ?>>CPRI</option>
                   <option value="manufacturer" <?= $department === 'manufacturer' ? 'selected' : '' ?>>Manufacturer</option>

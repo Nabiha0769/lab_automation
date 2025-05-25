@@ -6,7 +6,7 @@
                 <i class="ti ti-menu-2"></i>
               </a>
             </li>
-            <h2 class="text-capitalize"><?php echo $_SESSION['department'] ?> Dashboard</h2>
+            <h2 class="text-capitalize"><?php echo $_SESSION['role'] ?> Dashboard</h2>
           </ul>
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
