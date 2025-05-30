@@ -17,6 +17,16 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
+                     <?php
+                      if($_SESSION['role']==="taster"){
+                    ?>
+                    <a href="/tester_profile.php" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <?php
+                      }
+                    ?>
                     <a href="components/logout.php" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>  

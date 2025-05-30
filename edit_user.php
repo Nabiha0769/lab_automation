@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
               <div class="mb-3">
                 <label for="department" class="form-label">Role</label>
-                <select id="department" name="department" class="form-select" required>
+                <select id="role" name="role" class="form-select" required>
                   <option value="">Select Role</option>
                   <option value="taster" <?= $department === 'taster' ? 'selected' : '' ?>>Taster</option>
                   <option value="CPRI" <?= $department === 'CPRI' ? 'selected' : '' ?>>CPRI</option>

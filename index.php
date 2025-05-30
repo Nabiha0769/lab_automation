@@ -54,7 +54,7 @@ if(isset($_SESSION['username'])){
                       $row = $result->fetch_assoc();
                       if(password_verify($password, $row['password'])){
                         $_SESSION['role'] = $row['role'];
-                        $_SESSION['u_id'] = $row['id'];
+                        $_SESSION['user_id'] = $row['id'];
                         $_SESSION['username'] = $row['username'];
                        echo "
                         <script>

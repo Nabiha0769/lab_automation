@@ -46,43 +46,7 @@ include 'components/connnection.php';
       <!--  Header Start -->
       <?php include 'components/header.php' ?>
       <!--  Header End -->
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Add Product Type</h5>
-                <form method="post" enctype="multipart/form-data">
-                  <div class="mb-3">
-                    <label for="prod_type" class="form-label">Product Type</label>
-                    <input type="text" class="form-control" name="prod_type" id="prod_type">
-                  </div>
-                  <input type="submit" value="Add Product Type" class="btn btn-primary w-100" name="submit">
-                </form>
-                <?php
-                if(isset($_POST['submit'])){
-                  $prod_type = $_POST['prod_type'];
-                  $query = "insert into tbl_product (prod_type) values ('$prod_type')";
-                  $result = mysqli_query($conn,$query);
-                  if($result){
-                    echo "
-                    <script>
-                    alert('product add successfully');
-                    window.location.href = 'add_products.php';
-                    </script>
-                    ";
-                  }
-                }
-                ?>
-          </div>
-        </div>
-        <div class="py-6 px-6 text-center">
-          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-              class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com/" target="_blank"
-              class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
- <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+       <script src="assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="assets/libs/simplebar/dist/simplebar.js"></script>

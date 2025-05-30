@@ -18,7 +18,30 @@ if (!isset($_SESSION['username'])) {
   <link rel="stylesheet" href="assets/css/styles.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+  .table-custom {
+    border: 3px solid #333; /* Strong outer border */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  }
 
+  .table-custom th {
+    background-color: #f4f4f4;
+    color: #000;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+  }
+
+  .table-custom td, .table-custom th {
+    border: 1px solid #ccc;
+  }
+
+  .table-custom tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+  }
+</style>
 </head>
 
 <body>
@@ -55,10 +78,9 @@ if (!isset($_SESSION['username'])) {
           <div class="card-body">
             <h4 class="fw-semibold mb-4">User List</h4>
             <div class="table-responsive">
-              <table class="table table-bordered table-hover align-middle text-center">
-                <thead class="">
+              <table class="table table-bordered table-hover align-middle text-center table-custom">
+             <thead>
                   <tr>
-                    <th>Image</th>
                     <th>U_ID</th>
                     <th>Name</th>
                     <th>Username</th>
@@ -76,8 +98,7 @@ if (!isset($_SESSION['username'])) {
                    while ($stmt->fetch()) {
                         echo "
                         <tr>
-                         <td><img src='assets/images/profile/default.png' width='40' height='40' class='rounded-circle'></td>
-                            <td class='align-middle'>$user_id</td>
+                        <td class='align-middle'>$user_id</td>
                             <td class='align-middle'>$name</td>
                             <td class='align-middle'>$username</td>
                             <td class='align-middle'>$department</td>
