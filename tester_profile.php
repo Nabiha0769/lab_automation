@@ -1,17 +1,17 @@
 <?php
 session_start();
-include 'components/connection.php';
+include 'components/connnection.php';
 
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION['username'])) {
   header("location: index.php");
   exit;
 }
 
-$u_id = $_SESSION['id'];
+$u_id = $_SESSION['user_id'];
 $name = $department = $contact = ""; // Default empty
 
 // Fetch tester info if exists
-$stmt = $conn->prepare("SELECT name, department, contact FROM tester WHERE user_id = ?");
+$stmt = $conn->prepare("SELECT name, department, contact FROM taster WHERE user_id = ?");
 $stmt->bind_param("i", $u_id);
 $stmt->execute();
 $stmt->store_result();
