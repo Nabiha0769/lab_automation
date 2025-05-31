@@ -13,7 +13,7 @@
               </a>
             </li>
             <?php 
-            if($_SESSION['role']==="admin"){
+            if($_SESSION['role']==="Admin"){
               ?>
             
             <li class="nav-small-cap">
@@ -21,7 +21,7 @@
               <span class="hide-menu">User Management</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./user.php" aria-expanded="false">
+              <a class="sidebar-link" href="./users.php" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
@@ -40,7 +40,7 @@
           }
           ?>
           <?php
-          if($_SESSION['role']==="admin"|| $_SESSION['role']==="manufacturer"){
+          if($_SESSION['role']==="Admin"|| $_SESSION['role']==="Manufacturer"){
             ?>
            <li class="nav-small-cap">
               <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6" class="fs-6"></iconify-icon>
@@ -55,7 +55,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./add_products.php" aria-expanded="false">
+              <a class="sidebar-link" href="./add_product.php" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
@@ -63,18 +63,18 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./test_path.php" aria-expanded="false">
+              <a class="sidebar-link" href="./test_flow_setup.php" aria-expanded="false">
                 <span>
                   <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
                 </span>
-                <span class="hide-menu">test path</span> 
+                <span class="hide-menu">Test Flow Setup</span> 
               </a>
             </li>
             <?php
              }
              ?>
             <?php
-            if($_SESSION['role']==="admin" || $_SESSION ['role']==="taster"){
+            if($_SESSION['role']==="Admin" || $_SESSION ['role']==="Tester"){
               ?>
              <li class="nav-small-cap">
               <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6" class="fs-6"></iconify-icon>

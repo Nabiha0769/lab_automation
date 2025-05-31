@@ -3,7 +3,7 @@ session_start();
 if(!isset($_SESSION['username'])){
   header("location:index.php");
 }
-include 'components/connnection.php';
+include './components/connnection.phpp';
 
 ?>
 <!doctype html>
@@ -60,13 +60,13 @@ include 'components/connnection.php';
                 <?php
                 if(isset($_POST['submit'])){
                   $prod_type = $_POST['prod_type'];
-                  $query = "insert into tbl_product (prod_type) values ('$prod_type')";
+                  $query = "insert into products (product_type) values ('$prod_type')";
                   $result = mysqli_query($conn,$query);
                   if($result){
                     echo "
                     <script>
                     alert('product add successfully');
-                    window.location.href = 'add_products.php';
+                    window.location.href = 'add_product.php';
                     </script>
                     ";
                   }

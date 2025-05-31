@@ -1,5 +1,4 @@
 <?php
-session_start();
 include './components/connnection.php';
 
 if (!isset($_SESSION['username'])) {

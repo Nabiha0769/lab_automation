@@ -1,19 +1,18 @@
 <?php
-session_start();
-include './components/connnection.php';
-if(isset($_SESSION['username'])){
+include './components/connnection.php'; 
+if (isset($_SESSION['username'])) {
   header("location:dashboard.php");
+  exit();
 }
-
-
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SeoDash Free Bootstrap Admin Template by Adminmart</title>
+  <title>Login | Lab Automation</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
 </head>
@@ -29,55 +28,55 @@ if(isset($_SESSION['username'])){
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
               <div class="card-body">
-                <a href="./dashboard.php" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                <div class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="assets/images/logos/logo-light.svg" alt="">
-                </a>
+                </div>
                 <form method="post">
                   <div class="mb-3">
-                    <label for="exampleInputUsername" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="exampleInputUsername" name="username">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
                   </div>
                   <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
                   </div>
-                  <input type="submit" value="Sign In" class="btn btn-primary w-100 py-8 fs-4 mb-4" name="submit">
+                  <input type="submit" value="Sign In" class="btn btn-primary w-100 py-8 fs-4 mb-4" name="login">
                 </form>
                 <?php
-                  if(isset($_POST['submit'])){
-                    $username = $_POST['username'];
-                    $password = $_POST['password'];
-                    $query = "select * from tbl_user where username = '$username'";
-                    $result = mysqli_query($conn,$query);
-                    if(mysqli_num_rows($result)>0){
-                      
-                      $row = $result->fetch_assoc();
-                      if(password_verify($password, $row['password'])){
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['user_id'] = $row['id'];
-                        $_SESSION['username'] = $row['username'];
-                       echo "
-                        <script>
-                          alert('Login Successful')
-                          window.location.href = 'dashboard.php'
-                        </script>
-                        ";
-                      }
-                      else{
-                        echo "
-                        <script>
-                          alert('Invalid Password')
-                        </script>
-                        ";
-                      }
+                  // Handle login
+                  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+                    $username = trim($_POST["username"]);
+                    $password = $_POST["password"];
+ 
+                    $stmt = $conn->prepare("SELECT id, username, password, role FROM tbl_user WHERE username = ?");
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+                    $stmt->store_result();
+
+                    // Check if user exists
+                    if ($stmt->num_rows == 1) {
+                        $stmt->bind_result($id, $uname, $hashed_password, $role);
+                        $stmt->fetch();
+
+                        // Verify password
+                        if (password_verify($password, $hashed_password)) {
+                            // Set session variables
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $uname;
+                            $_SESSION["role"] = $role;
+
+                            // Redirect to dashboard
+                            header("Location: dashboard.php");
+                            exit;
+                        } else {
+                            echo "<div class='alert alert-danger'>Invalid password.</div>";
+                        }
+                    } else {
+                        echo "<div class='alert alert-danger'>Username not found.</div>";
                     }
-                    else{
-                      echo "
-                        <script>
-                          alert('Incorrect Username and Password')
-                        </script>
-                        ";
-                    }
+
+                    $stmt->close();
+                    $conn->close();
                   }
                 ?>
               </div>

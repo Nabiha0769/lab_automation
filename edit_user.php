@@ -1,86 +1,41 @@
 <?php
-session_start();
 include './components/connnection.php';
-
-if (!isset($_SESSION['username'])) {
-  header("location:index.php");
-  exit();
+if(!isset($_SESSION['id'])){
+  header("location: index.php");
 }
 
-// Get user ID from URL
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-  header("location:user.php");
-  exit();
-}
+$id = $_GET['id'] ?? null;
+$name = $username = $role = '';
 
-$user_id = (int) $_GET['id'];
-
-// Initialize variables for form
-$name = $username = $department = "";
-$error = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Process form submission
-  $name = $_POST['fullname'] ?? '';
-  $username = $_POST['username'] ?? '';
-  $department = $_POST['role'] ?? '';
-  $password = $_POST['password'] ?? '';
-
-  if (empty($name) || empty($username) || empty($department)) {
-    $error = "Please fill all required fields.";
-  } else {
-    if ($password !== '') {
-      // Password provided, hash it
-      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-      $stmt = $conn->prepare("UPDATE tbl_user SET name=?, username=?, role=?, password=? WHERE id=?");
-      $stmt->bind_param("ssssi", $name, $username, $department, $hashedPassword, $user_id);
-    } else {
-      // No password change
-      $stmt = $conn->prepare("UPDATE tbl_user SET name=?, username=?, role=? WHERE id=?");
-      $stmt->bind_param("sssi", $name, $username, $department, $user_id);
-    }
-
-    if ($stmt->execute()) {
-      $stmt->close();
-      echo "<script>
-              alert('User updated successfully');
-              window.location.href = 'user.php';
-            </script>";
-      exit();
-    } else {
-      $error = "Error updating user: " . htmlspecialchars($stmt->error);
-      $stmt->close();
-    }
-  }
-} else {
-  // Fetch current data to prefill form
+if ($id) {
   $stmt = $conn->prepare("SELECT name, username, role FROM tbl_user WHERE id = ?");
-  $stmt->bind_param("i", $user_id);
+  $stmt->bind_param("i", $id);
   $stmt->execute();
-  $stmt->bind_result($name, $username, $department);
-  if (!$stmt->fetch()) {
-    // No user found, redirect
-    $stmt->close();
-    header("location:user.php");
-    exit();
-  }
+  $stmt->bind_result($name, $username, $role);
+  $stmt->fetch();
   $stmt->close();
 }
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <title>Edit User</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add Users</title>
+  <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="assets/css/styles.min.css" />
 </head>
+
 <body>
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
-       data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-    
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
     <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="./dashboard.php" class="text-nowrap logo-img">
@@ -90,53 +45,106 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="ti ti-x fs-8"></i>
           </div>
         </div>
-        <?php include 'components/sidebar.php'; ?>
+        <!-- Sidebar navigation-->
+        <?php
+        include 'components/sidebar.php'
+        ?>
+        <!-- End Sidebar navigation -->
       </div>
+      <!-- End Sidebar scroll-->
     </aside>
-
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
     <div class="body-wrapper">
-      <?php include 'components/header.php'; ?>
-
-      <div class="container mt-5">
+      <!--  Header Start -->
+      <?php
+      include 'components/header.php'
+      ?>
+      <!--  Header End -->
+      <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h4 class="mb-4">Edit User</h4>
-            <?php if ($error): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
-            <?php endif; ?>
-            <form method="post">
-              <div class="mb-3">
-                <label for="fullname" class="form-label">Full Name</label>
-                <input type="text" id="fullname" name="fullname" class="form-control" required value="<?= htmlspecialchars($name) ?>">
+            <div class="d-flex justify-content-center align-items-center text-uppercase">
+              <h5 class="card-title fw-semibold mb-4">Add Users</h5>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <form method="post">
+                  <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
+
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= htmlspecialchars($name) ?>" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password" class="form-label">New Password (Leave blank to keep current)</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-control" id="role" name="role" required>
+                      <option value="">--Select Role--</option>
+                      <option value="Tester" <?= $role === "Tester" ? "selected" : "" ?>>Tester</option>
+                      <option value="Manufacturer" <?= $role === "Manufacturer" ? "selected" : "" ?>>Manufacturer</option>
+                      <option value="Admin" <?= $role === "Admin" ? "selected" : "" ?>>Admin</option>
+                    </select>
+                  </div>
+
+                  <input type="submit" class="btn btn-primary" value="Update User" name="update_user">
+                </form>
+
+                <?php
+                if (isset($_POST['update_user'])) {
+                  $id = $_POST['id'];
+                  $name = $_POST['name'];
+                  $username = $_POST['username'];
+                  $role = $_POST['role'];
+                  $password = $_POST['password'];
+
+                  if (!empty($password)) {
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                    $stmt = $conn->prepare("UPDATE tbl_user SET name = ?, username = ?, password = ?, role = ? WHERE id = ?");
+                    $stmt->bind_param("ssssi", $name, $username, $hashedPassword, $role, $id);
+                  } else {
+                    $stmt = $conn->prepare("UPDATE tbl_user SET name = ?, username = ?, role = ? WHERE id = ?");
+                    $stmt->bind_param("sssi", $name, $username, $role, $id);
+                  }
+
+                  if ($stmt->execute()) {
+                    echo "<script>alert('User updated successfully'); window.location.href = 'users.php';</script>";
+                  } else {
+                    echo "<div class='alert alert-danger'>Error: " . htmlspecialchars($stmt->error) . "</div>";
+                  }
+
+                  $stmt->close();
+                }
+                ?>
+
               </div>
-              <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control" required value="<?= htmlspecialchars($username) ?>">
-              </div>
-              <div class="mb-3">
-                <label for="department" class="form-label">Role</label>
-                <select id="role" name="role" class="form-select" required>
-                  <option value="">Select Role</option>
-                  <option value="taster" <?= $department === 'taster' ? 'selected' : '' ?>>Taster</option>
-                  <option value="CPRI" <?= $department === 'CPRI' ? 'selected' : '' ?>>CPRI</option>
-                  <option value="manufacturer" <?= $department === 'manufacturer' ? 'selected' : '' ?>>Manufacturer</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password <small>(Leave blank to keep current password)</small></label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="New password (optional)">
-              </div>
-              <button type="submit" class="btn btn-primary">Update User</button>
-              <a href="user.php" class="btn btn-secondary ms-2">Cancel</a>
-            </form>
+            </div>
           </div>
+        </div>
+        <div class="py-6 px-6 text-center">
+          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
+              class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com/" target="_blank"
+              class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
         </div>
       </div>
     </div>
   </div>
-
   <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
+
 </html>

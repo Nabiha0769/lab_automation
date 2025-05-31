@@ -1,17 +1,16 @@
 <?php
-session_start();
-include 'components/connnection.php';
+include './components/connnection.php';
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['id'])) {
   header("location: index.php");
   exit;
 }
 
-$u_id = $_SESSION['user_id'];
+$u_id = $_SESSION['id'];
 $name = $department = $contact = ""; // Default empty
 
 // Fetch tester info if exists
-$stmt = $conn->prepare("SELECT name, department, contact FROM taster WHERE user_id = ?");
+$stmt = $conn->prepare("SELECT name, department, contact FROM testers WHERE u_id = ?");
 $stmt->bind_param("i", $u_id);
 $stmt->execute();
 $stmt->store_result();
@@ -97,7 +96,7 @@ $stmt->close();
                   $contact = $_POST['contact'];
 
                   // Check if record exists
-                  $stmt = $conn->prepare("SELECT user_id FROM tester WHERE user_id = ?");
+                  $stmt = $conn->prepare("SELECT u_id FROM testers WHERE u_id = ?");
                   $stmt->bind_param("i", $u_id);
                   $stmt->execute();
                   $stmt->store_result();
@@ -105,12 +104,12 @@ $stmt->close();
                   if ($stmt->num_rows > 0) {
                     // Record exists, perform update
                     $stmt->close();
-                    $stmt = $conn->prepare("UPDATE tester SET name = ?, department = ?, contact = ? WHERE user_id = ?");
+                    $stmt = $conn->prepare("UPDATE testers SET name = ?, department = ?, contact = ? WHERE u_id = ?");
                     $stmt->bind_param("sssi", $name, $department, $contact, $u_id);
                   } else {
                     // No record, perform insert
                     $stmt->close();
-                    $stmt = $conn->prepare("INSERT INTO tester (name, department, contact, user_id) VALUES (?, ?, ?, ?)");
+                    $stmt = $conn->prepare("INSERT INTO testers (name, department, contact, u_id) VALUES (?, ?, ?, ?)");
                     $stmt->bind_param("sssi", $name, $department, $contact, $u_id);
                   }
 
