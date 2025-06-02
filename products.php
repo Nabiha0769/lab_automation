@@ -58,6 +58,27 @@ $products = $conn->query($query);
       <div class="container-fluid">
       <div class="card">
         <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-3 col-sm-6">
+              <label for="">Search <br>By Id:</label>
+              <input type="text" class="form-control" placeholder="Enter Product Id" id="productId">
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <label for=""><br>By Name:</label>
+              <input type="text" class="form-control" placeholder="Enter Product Name" id="productName">
+            </div>
+            <div class="col-md-6 col-sm-12 row">
+              <label for="">Search by Date:</label>
+              <div class="col-md-6">
+                <label for="">From</label>
+                <input type="date" class="form-control" id="strtDate">
+              </div>
+              <div class="col-md-6">
+                <label for="">To</label>
+                <input type="date" class="form-control" id="endDate">
+              </div>
+            </div>
+          </div>
           <h5 class="card-title fw-semibold">Products</h5>
           <table class="table">
             <thead>
@@ -72,7 +93,7 @@ $products = $conn->query($query);
                 <th>Options</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="productTable">
               <?php while ($row = $products->fetch_assoc()) {
                 echo "<tr>
                         <td>{$row['product_id']}</td>
@@ -97,12 +118,56 @@ $products = $conn->query($query);
     </div>
   </div>
 
-  <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="assets/js/sidebarmenu.js"></script>
   <script src="assets/js/app.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
+<script>
+$(document).ready(function(){
+  let debounceTimer;
+
+  $("#productId").on("keyup", function(){
+    clearTimeout(debounceTimer);
+    let productId = $(this).val();
+
+    debounceTimer = setTimeout(function(){
+      // ✅ Always call AJAX, whether input is empty or not
+      $.ajax({
+        url: "ajax/searchbyId.php",
+        type: "POST",
+        data: { prdtId: productId }, // Send empty string too
+        success: function(data){
+          $("#productTable").html(data);
+        },
+        error: function(){
+          $("#productTable").html("<tr><td colspan='8'>Error fetching data</td></tr>");
+        }
+      });
+    }, 300); // delay in ms
+  });
+  $("#productName").on("keyup", function(){
+  clearTimeout(debounceTimer);
+  let productName = $(this).val();
+
+  debounceTimer = setTimeout(function(){
+    // ✅ Always call AJAX, whether input is empty or not
+    $.ajax({
+      url: "ajax/searchbyname.php", // changed file
+      type: "POST",
+      data: { prdtName: productName }, // changed key
+      success: function(data){
+        $("#productTable").html(data);
+      },
+      error: function(){
+        $("#productTable").html("<tr><td colspan='8'>Error fetching data</td></tr>");
+      }
+    });
+  }, 300); // delay in ms
+});
+});
+</script>
 
 </html>
