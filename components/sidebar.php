@@ -96,6 +96,14 @@
                 <span class="hide-menu">Test Entry</span> 
               </a>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./tests.php" aria-expanded="false">
+                <span>
+                  <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon>
+                </span>
+                <span class="hide-menu">Tests</span> 
+              </a>
+            </li>
             <?php
             }
             ?>

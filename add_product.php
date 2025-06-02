@@ -42,10 +42,10 @@ if (!isset($_SESSION['id'])) {
               <h5 class="card-title fw-semibold mb-4">Add Product</h5>
             </div>
             <div class="card">
-              <div class="card-body">
+              <div class="card-body">label
                 <form method="post">
                   <div class="mb-3">
-                    <label for="product_name" class="form-label">Product Name</label>
+                    <label for="product_name" class="form-label">Product Name</>
                     <input type="text" class="form-control" id="product_name" name="product_name"
                       placeholder="e.g., Capacitor 50V" required>
                   </div>
