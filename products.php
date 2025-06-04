@@ -71,11 +71,12 @@ $products = $conn->query($query);
               <label for="">Search by Date:</label>
               <div class="col-md-6">
                 <label for="">From</label>
-                <input type="date" class="form-control" id="strtDate">
+                <input type="date" class="form-control" id="fromDate">
               </div>
               <div class="col-md-6">
                 <label for="">To</label>
-                <input type="date" class="form-control" id="endDate">
+                <input type="date" class="form-control" id="toDate">
+                <button id="search" value="search" class="btn btn-primary">Search</button>
               </div>
             </div>
           </div>
@@ -167,6 +168,30 @@ $(document).ready(function(){
     });
   }, 300); // delay in ms
 });
+
+$("#search").on("click", function () {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(function () {
+    let fromDate = $("#fromDate").val();
+    let toDate = $("#toDate").val();
+
+    $.ajax({
+      url: "ajax/searchbydate.php",  // PHP file to handle date filter
+      type: "POST",
+      data: {
+      from: fromDate,
+      to: toDate
+      },
+      success: function (response) {
+        $("#productTable").html(response);
+      },
+      error: function () {
+        $("#productTable").html("<tr><td colspan='8'>Error loading data</td></tr>");
+      }
+    });
+  }, 300); // ⏱ Debounce delay in milliseconds
+});
+
 });
 </script>
 
