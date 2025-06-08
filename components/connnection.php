@@ -4,7 +4,7 @@ session_start();
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$dbname = 'lab_auto'; // Replace with your actual DB name
+$dbname = 'lab_auto';
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
