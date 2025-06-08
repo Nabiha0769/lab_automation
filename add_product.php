@@ -125,21 +125,21 @@ if (!isset($_SESSION['id'])) {
                   $created_by = $_SESSION['id'];
 
                   // Get the latest serial number for this type + revision
-$stmt = $conn->prepare("SELECT serial_no FROM products WHERE product_type = ? AND revision = ? ORDER BY product_id DESC LIMIT 1");
-$stmt->bind_param("ss", $product_type, $revisions);
-$stmt->execute();
-$stmt->bind_result($last_serial);
-$stmt->fetch();
-$stmt->close();
+                  $stmt = $conn->prepare("SELECT serial_no FROM products WHERE product_type = ? AND revision = ? ORDER BY product_id DESC LIMIT 1");
+                  $stmt->bind_param("ss", $product_type, $revisions);
+                  $stmt->execute();
+                  $stmt->bind_result($last_serial);
+                  $stmt->fetch();
+                  $stmt->close();
 
-// Check if last_serial is null and set to 0 if so
-if ($last_serial) {
-    // Increment the last serial number by 1
-    $serial_no = str_pad((int)$last_serial + 1, 5, '0', STR_PAD_LEFT);
-} else {
-    // If no previous serial number exists, start from 00001
-    $serial_no = '00001';
-}
+                  // Check if last_serial is null and set to 0 if so
+                  if ($last_serial) {
+                      // Increment the last serial number by 1
+                      $serial_no = str_pad((int)$last_serial + 1, 5, '0', STR_PAD_LEFT);
+                  } else {
+                      // If no previous serial number exists, start from 00001
+                      $serial_no = '00001';
+                  }
 
                   // Construct the 10-digit product ID
                   $product_code = substr($product_type, 0, 3); // Simplified product code
