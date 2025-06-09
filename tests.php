@@ -97,8 +97,8 @@ $tests = $conn->query($query);
                                     <th>ACTIONS</th> <!-- Added for edit/delete actions -->
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php while ($row = $tests->fetch_assoc()) {
+                            <tbody id="testTable">
+                     <?php while ($row = $tests->fetch_assoc()) {
                                     echo "<tr>
                                             <td>{$row['test_id']}</td>
                                             <td>{$row['product_id']}</td>
