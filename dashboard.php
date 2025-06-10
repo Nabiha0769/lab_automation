@@ -81,6 +81,8 @@ ORDER BY p.product_id DESC
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="assets/css/styles.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+ 
 </head>
 
 <body>
@@ -141,17 +143,18 @@ ORDER BY p.product_id DESC
         </div>
       </div>
 
-      <!-- Bar Chart -->
-      <div class="row mb-4">
-        <div class="col-lg-8 mx-auto">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title mb-3">Product Status Overview</h5>
-              <div id="statusChart" style="height: 350px;"></div>
-            </div>
-          </div>
-        </div>
+    <!-- Bar Chart -->
+<div class="row mb-4">
+  <div class="col-10 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Product Status Overview</h5>
+        <div id="statusChart" style="height: 400px;"></div>
       </div>
+    </div>
+  </div>
+</div>
+
 
       <!-- Table -->
       <div class="row">
@@ -205,11 +208,16 @@ ORDER BY p.product_id DESC
   var options = {
     series: [{
       name: 'Count',
-      data: [<?= $totalPassed ?>, <?= $totalFailed ?>, <?= $totalMarket ?>, <?= ($totalManufactured - $totalPassed - $totalFailed) ?>]
+      data: [
+        <?= $totalPassed ?>,
+        <?= $totalFailed ?>,
+        <?= $totalMarket ?>,
+        <?= ($totalManufactured - $totalPassed - $totalFailed) ?>
+      ]
     }],
     chart: {
       type: 'bar',
-      height: 350,
+      height: 400,
       toolbar: {
         show: false
       }
@@ -217,37 +225,75 @@ ORDER BY p.product_id DESC
     plotOptions: {
       bar: {
         borderRadius: 6,
-        horizontal: false,
         columnWidth: '50%',
-      },
+      }
     },
     dataLabels: {
-      enabled: true
+      enabled: true,
+      style: {
+        fontSize: '16px',
+        fontWeight: 'bold',
+        colors: ['#1e3c72']  // DARK BLUE (readable on white)
+      }
     },
-    colors: ['#28a745', '#dc3545', '#ffc107', '#6c757d'],
+    colors: ['#0d6efd', '#dc3545', '#ffc107', '#6c757d'],
     xaxis: {
-      categories: ['Passed', 'Failed', 'Sent to Market', 'Others']
+      categories: ['Passed', 'Failed', 'Sent to Market', 'Others'],
+      labels: {
+        style: {
+          colors: '#1e3c72',
+          fontSize: '15px',
+          fontWeight: 600
+        }
+      },
+      axisBorder: {
+        color: '#1e3c72'
+      },
+      axisTicks: {
+        color: '#1e3c72'
+      }
     },
     yaxis: {
       title: {
-        text: 'Number of Products'
+        text: 'Number of Products',
+        style: {
+          color: '#1e3c72',
+          fontSize: '15px',
+          fontWeight: 600
+        }
+      },
+      labels: {
+        style: {
+          colors: '#1e3c72',
+          fontSize: '15px',
+          fontWeight: 600
+        }
+      }
+    },
+    grid: {
+      borderColor: '#1e3c72',
+      strokeDashArray: 3
+    },
+    tooltip: {
+      style: {
+        fontSize: '14px'
+      },
+      y: {
+        formatter: function (val) {
+          return val + " products";
+        }
       }
     },
     legend: {
       show: false
-    },
-    tooltip: {
-      y: {
-        formatter: function(val) {
-          return val + " products";
-        }
-      }
     }
   };
 
   var chart = new ApexCharts(document.querySelector("#statusChart"), options);
   chart.render();
 </script>
+
+
 
 
 <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

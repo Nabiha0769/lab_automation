@@ -15,6 +15,28 @@ if (!isset($_SESSION['id'])) {
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="assets/css/styles.min.css" />
+   <style>
+    .form-wrapper {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #ffffff;
+      border: 2px solid #e0e0e0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+    }
+    .form-wrapper h5 {
+      font-weight: 600;
+      color: #1e3c72;
+    }
+    .btn-primary {
+      background-color: #1e3c72;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #16325c;
+    }
+  </style>
 </head>
 
 <body>

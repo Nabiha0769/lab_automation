@@ -19,26 +19,41 @@ if (!isset($_SESSION['username'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 <style>
   .table-custom {
-    border: 3px solid #333; /* Strong outer border */
-    border-radius: 8px; /* Rounded corners */
+    border: 3px solid #1e2a40;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
   }
 
   .table-custom th {
-    background-color: #f4f4f4;
-    color: #000;
-    font-weight: bold;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: #fff;
+    font-weight: 600;
     border-bottom: 2px solid #ccc;
+    text-transform: uppercase;
+    font-size: 14px;
   }
 
   .table-custom td, .table-custom th {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+    padding: 12px;
   }
 
   .table-custom tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f0f6ff;
     transition: background-color 0.3s ease;
+  }
+
+  .card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  h4.fw-semibold {
+    font-size: 22px;
+    color: #2a2f45;
   }
 </style>
 </head>

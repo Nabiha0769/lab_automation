@@ -15,7 +15,35 @@ if (!isset($_SESSION['id'])) {
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="assets/css/styles.min.css" />
- 
+ <style>
+    .form-wrapper {
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      border: 2px solid #004080;
+      border-radius: 15px;
+      background-color: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #004080;
+      box-shadow: 0 0 0 0.2rem rgba(0, 64, 128, 0.2);
+    }
+
+    .card-title {
+      font-size: 24px;
+      color: #004080;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 
 <body>

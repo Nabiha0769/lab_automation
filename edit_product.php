@@ -39,6 +39,36 @@ $stmt->close();
   <link rel="shortcut icon" type="image/png" href="assets/images/logos/seodashlogo.png" />
   <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
   <link rel="stylesheet" href="assets/css/styles.min.css" />
+  <style>
+    .edit-form-wrapper {
+      max-width: 720px;
+      margin: auto;
+      margin-top: 40px;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      border: 2px solid #004080;
+      box-shadow: 0 0 25px rgba(0, 64, 128, 0.15);
+    }
+
+    .card-title {
+      font-size: 24px;
+      color: #004080;
+      font-weight: bold;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .form-control:focus {
+      border-color: #004080;
+      box-shadow: 0 0 0 0.2rem rgba(0, 64, 128, 0.25);
+    }
+
+    label {
+      font-weight: 600;
+    }
+  </style>
 </head>
 
 <body>
