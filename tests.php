@@ -60,28 +60,43 @@ $tests = $conn->query($query);
                         <h5 class="card-title fw-semibold">TESTS</h5>
 
 
-                           <div class="row mb-3">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="">Search <br>By Test ID:</label>
-                                <input type="text" class="form-control" placeholder="Enter Test ID" id="testId">
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <label for=""><br>By Product ID:</label>
-                                <input type="text" class="form-control" placeholder="Enter Product ID" id="productId">
-                            </div>
-                            <div class="col-md-6 col-sm-12 row">
-                                <label for="">Search by Date:</label>
-                                <div class="col-md-6">
-                                    <label for="">From</label>
-                                    <input type="date" class="form-control" id="fromDate">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">To</label>
-                                    <input type="date" class="form-control" id="toDate">
-                                    <button id="search" value="search" class="btn btn-primary">Search</button>
-                                </div>
-                            </div>
-                        </div>
+    <div class="row mb-3">
+        <div class="col-md-3 col-sm-6">
+            <label>Search By Test ID:</label>
+            <input type="text" class="form-control" placeholder="Enter Test ID" id="testId">
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <label>By Product ID:</label>
+            <input type="text" class="form-control" placeholder="Enter Product ID" id="productId">
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <label>By Tester Name:</label>
+            <input type="text" class="form-control" placeholder="Enter Tester Name" id="testerName">
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <label>Search by Date:</label>
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <input type="date" class="form-control" id="fromDate">
+                </div>
+                <div class="col-md-6">
+                    <input type="date" class="form-control" id="toDate">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12 text-end">
+            <button id="searchBtn" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
+    <div id="results"></div>
+
+</div>
+
+
 
                         <table class="table">
                             <thead>
@@ -188,6 +203,34 @@ $tests = $conn->query($query);
     }, 300);
 });
 });
+
  </script>
+ <script>
+$(document).ready(function() {
+    $('#searchBtn').click(function() {
+        var testId = $('#testId').val();
+        var productId = $('#productId').val();
+        var testerName = $('#testerName').val();
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+
+        $.ajax({
+            url: 'search_test.php',
+            type: 'POST',
+            data: {
+                testId: testId,
+                productId: productId,
+                testerName: testerName,
+                fromDate: fromDate,
+                toDate: toDate
+            },
+            success: function(response) {
+                $('#results').html(response);
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
