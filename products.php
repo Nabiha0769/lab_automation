@@ -68,7 +68,7 @@ $products = $conn->query($query);
               <input type="text" class="form-control" placeholder="Enter Product Name" id="productName">
             </div>
             <div class="col-md-6 col-sm-12 row">
-              <label for="">Search by Date:</label>
+              <label for="">Search by Date:</label>   
               <div class="col-md-6">
                 <label for="">From</label>
                 <input type="date" class="form-control" id="fromDate">
@@ -76,8 +76,8 @@ $products = $conn->query($query);
               <div class="col-md-6">
                 <label for="">To</label>
                 <input type="date" class="form-control" id="toDate">
-                <button id="search" value="search" class="btn btn-primary">Search</button>
-              </div>
+                <button id="search" value="search" class="btn btn-primary mt-3">Search</button>
+              </div> 
             </div>
           </div>
           <h5 class="card-title fw-semibold">Products</h5>
@@ -150,7 +150,7 @@ $(document).ready(function(){
     }, 300); // delay in ms
   });
   $("#productName").on("keyup", function(){
-  clearTimeout(debounceTimer);
+    (debounceTimer);
   let productName = $(this).val();
 
   debounceTimer = setTimeout(function(){
