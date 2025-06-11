@@ -62,8 +62,13 @@
 
 .sidebar-nav .nav-link.active .icon {
   color: #fff !important;
-} </style> 
-<?php $currentPage = basename($_SERVER['PHP_SELF']); ?><nav class="sidebar-nav" data-simplebar> 
+}
+.left-sidebar{
+  overflow-y: scroll;
+}
+</style> 
+<?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
+<nav class="sidebar-nav" data-simplebar> 
   <ul class="nav flex-column" id="sidebarnav">
 
     <li class="nav-item nav-section">Home</li>

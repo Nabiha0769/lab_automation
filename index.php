@@ -87,7 +87,7 @@ if (isset($_SESSION['username'])) {
     <div class="col-md-6 col-lg-5 col-xl-4">
       <div class="login-card">
         <div class="text-center">
-          <img src="assets/images/logos/logo-light.svg" alt="Logo" class="logo-img">
+          <img src="assets/images/logos/logo-light.png" alt="Logo" class="logo-img">
         </div>
         <div class="login-title">Login to Lab Automation</div>
         <form method="post">
