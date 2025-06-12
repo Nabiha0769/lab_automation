@@ -17,7 +17,7 @@ if (isset($_SESSION['username'])) {
 
   <style>
     body {
-      background: url('assets/images/backgrounds/logo-light.png') no-repeat center center fixed;
+      background: url('assets/images/backgrounds/lab_auto.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }

@@ -68,70 +68,83 @@
 }
 </style> 
 <?php $currentPage = basename($_SERVER['PHP_SELF']); ?>
-<nav class="sidebar-nav" data-simplebar> 
-  <ul class="nav flex-column" id="sidebarnav">
-
-    <li class="nav-item nav-section">Home</li>
-    <li class="nav-item">
-      <a class="nav-link <?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>" href="./dashboard.php">
-        <iconify-icon icon="solar:home-smile-bold-duotone" class="icon"></iconify-icon> Dashboard
-      </a>
-    </li>
-
-    <?php if ($_SESSION['role'] === "Admin") { ?>
-      <li class="nav-item nav-section">User Management</li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'users.php') ? 'active' : ''; ?>" href="./users.php">
-          <iconify-icon icon="solar:users-group-rounded-bold-duotone" class="icon"></iconify-icon> Users
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'add_user.php') ? 'active' : ''; ?>" href="./add_user.php">
-          <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="icon"></iconify-icon> Add User
-        </a>
-      </li>
-    <?php } ?>
-
-    <?php if ($_SESSION['role'] === "Admin" || $_SESSION['role'] === "Manufacturer") { ?>
-      <li class="nav-item nav-section">Product Management</li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'products.php') ? 'active' : ''; ?>" href="./products.php">
-          <iconify-icon icon="solar:box-bold-duotone" class="icon"></iconify-icon> Products
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'add_product.php') ? 'active' : ''; ?>" href="./add_product.php">
-          <iconify-icon icon="mdi:plus-box-multiple" class="icon"></iconify-icon> Add Products
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'test_flow_setup.php') ? 'active' : ''; ?>" href="./test_flow_setup.php">
-          <iconify-icon icon="solar:slider-minimalistic-horizontal-bold-duotone" class="icon"></iconify-icon> Test Flow Setup
-        </a>
-      </li>
-    <?php } ?>
-
-    <?php if ($_SESSION['role'] === "Admin" || $_SESSION['role'] === "Tester") { ?>
-      <li class="nav-item nav-section">Tests Management</li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'test_type.php') ? 'active' : ''; ?>" href="./test_type.php">
-          <iconify-icon icon="solar:list-bold-duotone" class="icon"></iconify-icon> Test Type
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'test_entry.php') ? 'active' : ''; ?>" href="./test_entry.php">
-          <iconify-icon icon="mdi:clipboard-text" class="icon"></iconify-icon> Test Entry
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link <?php echo ($currentPage == 'tests.php') ? 'active' : ''; ?>" href="./tests.php">
-          <iconify-icon icon="mdi:clipboard-list" class="icon"></iconify-icon> Tests
-        </a>
-      </li>
-    <?php } ?>
-
-  </ul>
-</nav>
+<aside class="left-sidebar">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./dashboard.php" class="text-nowrap logo-img">
+            <img style="height:70px;width:70px;" src="assets/images/logos/logo-light.png" alt="" />
+            Lab Automation  
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <nav class="sidebar-nav" data-simplebar> 
+          <ul class="nav flex-column" id="sidebarnav">
+        
+            <li class="nav-item nav-section">Home</li>
+            <li class="nav-item">
+              <a class="nav-link <?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>" href="./dashboard.php">
+                <iconify-icon icon="solar:home-smile-bold-duotone" class="icon"></iconify-icon> Dashboard
+              </a>
+            </li>
+        
+            <?php if ($_SESSION['role'] === "Admin") { ?>
+              <li class="nav-item nav-section">User Management</li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'users.php') ? 'active' : ''; ?>" href="./users.php">
+                  <iconify-icon icon="solar:users-group-rounded-bold-duotone" class="icon"></iconify-icon> Users
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'add_user.php') ? 'active' : ''; ?>" href="./add_user.php">
+                  <iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="icon"></iconify-icon> Add User
+                </a>
+              </li>
+            <?php } ?>
+        
+            <?php if ($_SESSION['role'] === "Admin" || $_SESSION['role'] === "Manufacturer") { ?>
+              <li class="nav-item nav-section">Product Management</li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'products.php') ? 'active' : ''; ?>" href="./products.php">
+                  <iconify-icon icon="solar:box-bold-duotone" class="icon"></iconify-icon> Products
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'add_product.php') ? 'active' : ''; ?>" href="./add_product.php">
+                  <iconify-icon icon="mdi:plus-box-multiple" class="icon"></iconify-icon> Add Products
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'test_flow_setup.php') ? 'active' : ''; ?>" href="./test_flow_setup.php">
+                  <iconify-icon icon="solar:slider-minimalistic-horizontal-bold-duotone" class="icon"></iconify-icon> Test Flow Setup
+                </a>
+              </li>
+            <?php } ?>
+        
+            <?php if ($_SESSION['role'] === "Admin" || $_SESSION['role'] === "Tester") { ?>
+              <li class="nav-item nav-section">Tests Management</li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'test_type.php') ? 'active' : ''; ?>" href="./test_type.php">
+                  <iconify-icon icon="solar:list-bold-duotone" class="icon"></iconify-icon> Test Type
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'test_entry.php') ? 'active' : ''; ?>" href="./test_entry.php">
+                  <iconify-icon icon="mdi:clipboard-text" class="icon"></iconify-icon> Test Entry
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <?php echo ($currentPage == 'tests.php') ? 'active' : ''; ?>" href="./tests.php">
+                  <iconify-icon icon="mdi:clipboard-list" class="icon"></iconify-icon> Tests
+                </a>
+              </li>
+            <?php } ?>
+        
+          </ul>
+        </nav>
+      </div>
+    </aside>
 
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
